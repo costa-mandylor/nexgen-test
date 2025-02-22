@@ -28,17 +28,17 @@
 
   /* Sizes */
   --icon-size: 1.2rem;
-  --avatar-size: 36px;
-  --logo-height: 20px;
+  --avatar-size: 2.25rem; /* 36px */
+  --logo-height: 1.25rem; /* 20px */
   --border-radius: 2rem;
   --scrollbar-size: 0.5rem;
 
   /* Font Sizes */
-  --font-size-base: 16px;
-  --font-size-lg: 18px;
-  --font-size-md: 16px;
-  --font-size-sm: 14px;
-  --font-size-xs: 12px;
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-md: 1rem; /* 16px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-xs: 0.75rem; /* 12px */
 }
 
 /* Base Styles */
@@ -122,8 +122,8 @@ body {
 }
 
 .search img {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem; /* 20px */
+  height: 1.25rem; /* 20px */
   opacity: 0.7;
 }
 
@@ -163,8 +163,8 @@ input[type="number"] {
   background-image: url("../icons/select-arrow.svg");
   background-repeat: no-repeat;
   background-position: calc(100% - 10px) center;
-  background-size: 16px;
-  padding-right: 25px;
+  background-size: 1rem; /* 16px */
+  padding-right: 1.563rem; /* 25px */
   cursor: pointer;
 }
 
@@ -213,6 +213,11 @@ th:last-child {
   z-index: 1;
 }
 
+.table__heading-content {
+  display: flex;
+  align-items: center;
+}
+
 /* Table Rows */
 tbody tr {
   transition: opacity var(--transition-slow), transform var(--transition-slow);
@@ -250,14 +255,13 @@ tbody tr.hide {
 .table__cell-content {
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 
 .table__cell-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 150px;
+  max-width: 9.375rem; /* 150px */
 }
 
 .table__cell-icon {
@@ -266,10 +270,10 @@ tbody tr.hide {
 
 /* Edit Icon in Cell */
 .table__edit-icon {
-  margin-left: 8px;
+  margin-left: 0.5rem;
   cursor: pointer;
-  width: 16px;
-  height: 16px;
+  width: 1rem; /* 16px */
+  height: 1rem; /* 16px */
   transition: opacity 0.2s ease;
   color: var(--color-text);
 }
@@ -328,8 +332,8 @@ tbody tr.hide {
 /* Button Icons */
 .btn img {
   fill: currentColor;
-  width: 20px;
-  height: 20px;
+  width: 1.25rem; /* 20px */
+  height: 1.25rem; /* 20px */
 }
 
 .btn--primary img,
@@ -390,7 +394,7 @@ tbody tr.hide {
   }
 
   .table__cell-text {
-    max-width: 100px;
+    max-width: 6.25rem; /* 100px */
   }
 
   .btn {
@@ -412,7 +416,7 @@ tbody tr.hide {
 
 @media screen and (max-width: 480px) {
   .table__cell-text {
-    max-width: 80px;
+    max-width: 5rem; /* 80px */
   }
 
   td,
@@ -421,8 +425,8 @@ tbody tr.hide {
   }
 
   .btn img {
-    width: 16px;
-    height: 16px;
+    width: 1rem; /* 16px */
+    height: 1rem; /* 16px */
   }
 }
 
@@ -474,8 +478,6 @@ tbody tr.hide {
 
   .table__heading {
     font-size: var(--font-size-xs);
-    display: flex;
-    align-items: center;
   }
 
   .table__cell-text {
