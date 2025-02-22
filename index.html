@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Nexgenus Editable Table" />
+    <title>Nexgenus - Editable Table</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <main class="container" role="main" id="mainTable">
+      <header class="header" id="tableHeader">
+        <div class="logo" id="logoContainer">
+          <img
+            src="images/nexgenlogo.png"
+            alt="Nexgen Logo"
+            id="logoImage"
+            width="auto"
+            height="20"
+          />
+        </div>
+
+        <form class="search" role="search" id="searchForm">
+          <input
+            class="search__input"
+            id="searchInput"
+            placeholder="Search Data..."
+            aria-label="Search table data"
+          />
+          <img
+            src="images/search.png"
+            alt="Search Icon"
+            id="searchIcon"
+            width="20"
+            height="20"
+          />
+        </form>
+
+        <button
+          type="button"
+          class="btn btn--primary"
+          id="addRowBtn"
+          aria-label="Add new row"
+        >
+          <img src="icons/plus.svg" alt="" aria-hidden="true" />
+          Add
+        </button>
+      </header>
+
+      <section class="content" id="tableBody">
+        <table class="table" role="grid" id="dataTable">
+          <thead>
+            <tr>
+              <th
+                class="table__heading"
+                id="nameHeading"
+                data-sort="name"
+                scope="col"
+              >
+                <span>Name</span>
+                <span class="sort-icon" aria-hidden="true">↑</span>
+              </th>
+              <th
+                class="table__heading"
+                id="ageHeading"
+                data-sort="age"
+                scope="col"
+              >
+                <span>Age</span>
+                <span class="sort-icon" aria-hidden="true">↑</span>
+              </th>
+              <th
+                class="table__heading"
+                id="genderHeading"
+                data-sort="gender"
+                scope="col"
+              >
+                <span>Gender</span>
+                <span class="sort-icon" aria-hidden="true">↑</span>
+              </th>
+              <th class="table__heading" id="actionsHeading" scope="col">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody id="editableTableBody"></tbody>
+        </table>
+        <button
+          type="button"
+          class="btn btn--primary btn--full"
+          id="addRowBtnBottom"
+          aria-label="Add new row"
+        >
+          <img src="icons/plus.svg" alt="" aria-hidden="true" />
+          Add
+        </button>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
