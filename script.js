@@ -1,6 +1,14 @@
-// Table Manager Module using IIFE pattern for encapsulation
+/**
+ * Table Manager Module - Handles all table operations and interactions
+ * Uses IIFE pattern for encapsulation and private scope
+ * @module TableManager
+ */
 const TableManager = (function () {
-  // Configuration object defining input types and initial data
+  /* Configuration Block
+   * Defines structure for input types and default data
+   * - inputs: specifies UI elements for editing
+   * - initialData: provides starting table content
+   */
   const CONFIG = {
     inputs: {
       gender: {
@@ -22,17 +30,25 @@ const TableManager = (function () {
     initialData: [{ name: "John Doe", age: 25, gender: "Male" }],
   };
 
-  // Cache for DOM elements
+  /* DOM Cache
+   * Stores frequently accessed elements to improve performance
+   * Prevents repeated DOM queries
+   */
   const elements = {};
 
-  // Initialize the module
+  /* Core Initialization Functions
+   * Sets up the module and prepares for user interaction
+   */
   function init() {
     cacheDOM();
     bindEvents();
     loadInitialData();
   }
 
-  // Cache all required DOM elements for better performance
+  /* DOM Caching
+   * Stores references to key DOM elements used throughout the module
+   * Improves performance by reducing DOM queries
+   */
   function cacheDOM() {
     elements.search = document.getElementById("searchInput");
     elements.tbody = document.getElementById("editableTableBody");
@@ -45,14 +61,16 @@ const TableManager = (function () {
     };
   }
 
-  // Bind all event listeners
+  /* Event Binding
+   * Sets up all event listeners for table interactions
+   * Handles: search, add/delete rows, cell editing, sorting
+   */
   function bindEvents() {
     elements.search.addEventListener("input", searchTable);
     elements.addRowBtn.addEventListener("click", addRow);
     elements.addRowBtnBottom.addEventListener("click", addRow);
     elements.tbody.addEventListener("dblclick", handleCellEdit);
 
-    // Add click handlers for column sorting
     Object.values(elements.tableHeadings).forEach((heading) => {
       console.log("heading", heading);
       heading.addEventListener("click", () => sortTable(heading));
@@ -61,12 +79,22 @@ const TableManager = (function () {
     document.addEventListener("click", handleClickOutside);
   }
 
-  // Load initial table data
+  /**
+   * Loads initial data into the table
+   * @function loadInitialData
+   * @private
+   */
   function loadInitialData() {
     CONFIG.initialData.forEach(createTableRow);
   }
 
-  // Create a new table row with unique IDs
+  /**
+   * Creates a new table row with unique identifiers
+   * @function createTableRow
+   * @param {Object} [data={}] - Data to populate the row
+   * @returns {HTMLElement} The created row element
+   * @private
+   */
   function createTableRow(data = {}) {
     const row = document.createElement("tr");
     row.id = `row-${Date.now()}`;
@@ -77,7 +105,13 @@ const TableManager = (function () {
     return row;
   }
 
-  // Generate HTML for table row cells
+  /**
+   * Generates HTML structure for table row
+   * @function generateRowHTML
+   * @param {Object} data - Data for row cells
+   * @returns {string} HTML string for row
+   * @private
+   */
   function generateRowHTML(data) {
     const cells = ["name", "age", "gender"]
       .map(
@@ -95,9 +129,13 @@ const TableManager = (function () {
     return `${cells}<td><button class="btn btn--danger" id="delete-${Date.now()}"><img src="icons/trash.svg" alt="" aria-hidden="true" /><span>Delete</span></button></td>`;
   }
 
-  // Attach event listeners to row elements
+  /**
+   * Attaches event listeners to row elements
+   * @function attachRowEventListeners
+   * @param {HTMLElement} row - Row element to attach listeners to
+   * @private
+   */
   function attachRowEventListeners(row) {
-    // Add edit icon click handlers
     row.querySelectorAll("[id^='edit-']").forEach((icon) => {
       icon.addEventListener("click", (e) => {
         const cell = e.target.closest(".table__cell");
@@ -106,12 +144,16 @@ const TableManager = (function () {
       });
     });
 
-    // Add delete button handler
     const deleteBtn = row.querySelector("[id^='delete-']");
     deleteBtn.addEventListener("click", () => deleteRow(row));
   }
 
-  // Handle cell editing when clicked
+  /**
+   * Handles cell editing interaction
+   * @function handleCellEdit
+   * @param {Event} event - Click event object
+   * @private
+   */
   function handleCellEdit(event) {
     const cell = event.target.closest(".table__cell");
     if (!cell) return;
@@ -129,7 +171,14 @@ const TableManager = (function () {
     setupInputEventListeners(cell, input);
   }
 
-  // Create appropriate input element based on data type
+  /**
+   * Creates appropriate input element based on cell type
+   * @function createInputElement
+   * @param {string} dataType - Type of data (name, age, gender)
+   * @param {string} currentValue - Current cell value
+   * @returns {HTMLElement} Created input element
+   * @private
+   */
   function createInputElement(dataType, currentValue) {
     const config = CONFIG.inputs[dataType];
 
@@ -155,7 +204,13 @@ const TableManager = (function () {
     return input;
   }
 
-  // Set up event listeners for input elements
+  /**
+   * Sets up event listeners for input elements
+   * @function setupInputEventListeners
+   * @param {HTMLElement} cell - Cell containing input
+   * @param {HTMLElement} input - Input element
+   * @private
+   */
   function setupInputEventListeners(cell, input) {
     const saveAndRestore = () => {
       const content = createCellContent(input.value);
@@ -171,23 +226,33 @@ const TableManager = (function () {
     });
   }
 
-  // Create cell content container
+  /**
+   * Creates cell content container
+   * @function createCellContent
+   * @param {string} value - Cell value
+   * @returns {HTMLElement} Cell content container
+   * @private
+   */
   function createCellContent(value) {
     const content = document.createElement("div");
     content.className = "table__cell-content";
     content.id = `content-${Date.now()}`;
 
-    // Create text span with truncation
     const textSpan = document.createElement("span");
     textSpan.className = "table__cell-text";
     textSpan.textContent = value;
 
-    // Add elements to content
     content.appendChild(textSpan);
     return content;
   }
 
-  // Create edit icon with event listener
+  /**
+   * Creates edit icon with event listener
+   * @function createEditIcon
+   * @param {HTMLElement} cell - Cell element
+   * @returns {HTMLElement} Edit icon element
+   * @private
+   */
   function createEditIcon(cell) {
     const editIcon = document.createElement("img");
     editIcon.src = "icons/edit-icon.svg";
@@ -201,7 +266,11 @@ const TableManager = (function () {
     return editIcon;
   }
 
-  // Handle table search functionality
+  /**
+   * Handles table search functionality
+   * @function searchTable
+   * @private
+   */
   function searchTable() {
     const searchTerm = elements.search.value.toLowerCase();
     const rows = elements.tbody.querySelectorAll("tr");
@@ -214,15 +283,18 @@ const TableManager = (function () {
     });
   }
 
-  // Handle table column sorting
+  /**
+   * Handles table column sorting
+   * @function sortTable
+   * @param {HTMLElement} heading - Column heading element
+   * @private
+   */
   function sortTable(heading) {
     const column = heading.dataset.sort;
     const rows = Array.from(elements.tbody.querySelectorAll("tr"));
 
-    // Toggle sort direction
     const currentOrder = heading.classList.contains("asc") ? -1 : 1;
 
-    // Update sort icons and classes
     Object.values(elements.tableHeadings).forEach((th) => {
       th.classList.remove("asc", "desc");
       th.querySelector(".sort-icon").textContent = "↑";
@@ -232,7 +304,6 @@ const TableManager = (function () {
     heading.querySelector(".sort-icon").textContent =
       currentOrder === 1 ? "↓" : "↑";
 
-    // Sort rows
     const sortedRows = rows.sort((a, b) => {
       const aCell = a.querySelector(`[data-type="${column}"]`);
       const bCell = b.querySelector(`[data-type="${column}"]`);
@@ -240,34 +311,45 @@ const TableManager = (function () {
       let aValue = aCell.textContent.trim();
       let bValue = bCell.textContent.trim();
 
-      // Handle number sorting for age column
       if (column === "age") {
         return currentOrder * (Number(aValue) - Number(bValue));
       }
 
-      // String comparison for other columns
       return currentOrder * aValue.localeCompare(bValue);
     });
 
-    // Re-append sorted rows
     sortedRows.forEach((row) => elements.tbody.appendChild(row));
   }
 
-  // Add new row to table
+  /**
+   * Adds new row to table
+   * @function addRow
+   * @public
+   */
   function addRow() {
     const newRow = createTableRow();
     const firstCell = newRow.querySelector(".table__cell");
     handleCellEdit({ target: firstCell });
   }
 
-  // Delete row from table
+  /**
+   * Deletes row from table
+   * @function deleteRow
+   * @param {HTMLElement} row - Row to delete
+   * @public
+   */
   function deleteRow(row) {
     if (confirm("Are you sure you want to delete this row?")) {
       row.remove();
     }
   }
 
-  // Handle clicks outside of input elements
+  /**
+   * Handles clicks outside of input elements
+   * @function handleClickOutside
+   * @param {Event} event - Click event object
+   * @private
+   */
   function handleClickOutside(event) {
     if (!event.target.closest(".table__input")) {
       document
@@ -276,7 +358,7 @@ const TableManager = (function () {
     }
   }
 
-  // Public API
+  /** @public {Object} Public API */
   return {
     init,
     addRow,
